@@ -1,7 +1,13 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "User shouldn't have name" do
+    us = User.new(email: "Sasha@koshka.ru")
+    assert_not us.save, "User shouldn't have name"
+  end
+
+  test "User shouldn't have the email" do
+    us = User.new(namr: "Sasha")
+    assert_not us.save, "User shouldn't have the email"
+  end
 end
