@@ -1,13 +1,23 @@
 <h1><%= @article.title %></h1>
-
 <p><%= @article.body %></p>
+<% if @article.user == current_user %>
+  <p>By: Me</p>
+<% elsif @article.user.present? %>
+  <p>By: <%= @article.user.email %></p>
+<% else %>
+  <p>By: Guest User</p>
+<% end %>
+<p>Last updated: <%= @article.updated_at.strftime("%B %d, %Y %H:%M") %></p>
+
 
 <ul>
-  <li><%= link_to "Edit", edit_article_path(@article) %></li>
-  <li><%= link_to "Destroy", article_path(@article), data: {
-    turbo_method: :delete,
-    turbo_confirm: "Are you sure?"
-  } %></li>
+  <% if @article.user == current_user %>
+    <li><%= link_to "Edit", edit_article_path(@article) %></li>
+    <li><%= link_to "Destroy", article_path(@article), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    } %></li>
+  <% end %>
 </ul>
 
 <h2>Comments</h2>

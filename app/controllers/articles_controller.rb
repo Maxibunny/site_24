@@ -1,10 +1,11 @@
 class ArticlesController < ApplicationController
 
   before_action :require_user, except: [:index, :show]
+  before_action :require_owner, only: [:edit, :update, :destroy]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
-    @articles = Article.all
+    @articles = Article.includes(:user).all
   end
 
   def show
@@ -41,13 +42,20 @@ class ArticlesController < ApplicationController
   def destroy
     @article = Article.find(params[:id])
     @article.destroy
-
     redirect_to root_path, status: :see_other
   end
 
   def my_articles
     @articles = current_user.articles
   end
+
+  def require_owner
+    @article = Article.find(params[:id])
+    unless @article.user == current_user
+      redirect_to root_path, alert: "You are not authorized to modify this article"
+    end
+  end
+
 
   private
   def set_article
