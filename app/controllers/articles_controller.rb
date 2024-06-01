@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
 
   before_action :require_user, except: [:index, :show]
+  before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   def index
     @articles = Article.all
@@ -15,8 +16,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
-
+    @article = current_user.articles.build(article_params)
     if @article.save
       redirect_to @article
     else
@@ -45,7 +45,15 @@ class ArticlesController < ApplicationController
     redirect_to root_path, status: :see_other
   end
 
+  def my_articles
+    @articles = current_user.articles
+  end
+
   private
+  def set_article
+    @article = Article.find(params[:id])
+  end
+
   def article_params
     params.require(:article).permit(:title, :body, :status)
   end

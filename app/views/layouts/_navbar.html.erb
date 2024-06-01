@@ -2,6 +2,7 @@
   <ul>
     <% if logged_in? %>
       <li>Welcome, <%= current_user.email %></li>
+      <li><%= link_to "My Articles", my_articles_path %></li>
       <li><%= link_to "Log Out", logout_path, method: :delete %></li>
     <% else %>
       <li><%= link_to "Sign Up", signup_path %></li>
