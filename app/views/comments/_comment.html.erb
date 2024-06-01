@@ -1,18 +1,31 @@
-<% unless comment.archived? %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter %>
-  </p>
+<style>
+    .comment {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+</style>
 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
+<div class="comment">
+  <% unless comment.archived? %>
+    <p>
+      <strong>Commenter:</strong>
+      <%= comment.commenter %>
+    </p>
 
-  <p>
-    <%= link_to "Destroy Comment", [comment.article, comment], data: {
-      turbo_method: :delete,
-      turbo_confirm: "Are you sure?"
-    } %>
-  </p>
-<% end %>
+    <p>
+      <strong>Comment:</strong>
+      <%= comment.body %>
+    </p>
+
+    <% if current_user && comment.commenter == current_user.email %>
+      <p>
+        <%= link_to "Destroy Comment", [comment.article, comment], data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        } %>
+      </p>
+    <% end %>
+  <% end %>
+</div>
