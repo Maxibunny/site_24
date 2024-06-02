@@ -2,7 +2,7 @@
 
 <%= form_with scope: :session, url: login_path, local: true do |form| %>
   <% if flash[:alert] %>
-    <p><%= flash[:alert] %></p>
+    <p class="error"><%= flash[:alert] %></p>
   <% end %>
 
   <div class="field">

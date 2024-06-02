@@ -5,13 +5,20 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to root_path, notice: "Welcome to the app, #{@user.email}!"
+    if @user.email.include?("@")
+      if @user.save
+        session[:user_id] = @user.id
+        redirect_to root_path, notice: "Welcome to the app, #{@user.email}!"
+      else
+        flash.now[:alert] = @user.errors.full_messages.join(", ")
+        render :new, status: :unprocessable_entity
+      end
     else
-      render :new
+      flash.now[:alert] = "Invalid email format. Please enter a valid email address."
+      render :new, status: :unprocessable_entity
     end
   end
+
 
   private
 
