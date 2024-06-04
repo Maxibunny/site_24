@@ -5,3 +5,5 @@
 //= link pagy.js
 //= link pagy.css
 //= link application.js
+//= link controllers/application.js
+
