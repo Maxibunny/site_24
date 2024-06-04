@@ -5,7 +5,7 @@ class ArticleTest < ActiveSupport::TestCase
 
 
   test "Can't create articles without title" do
-    art = Article.new(id: 123, title: "", body: "123456789 987654321")
+    art = Article.new(body: "123456789 987654321")
     assert_not art.save, "Title can't be blank"
   end
 
