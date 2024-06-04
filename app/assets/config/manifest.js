@@ -1,4 +1,7 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
-//= link_tree ../../javascript .js
-//= link_tree ../../../vendor/javascript .js
+//= link main.css
+//= link application.css
+//= link pagy.js
+//= link pagy.css
+//= link application.js
